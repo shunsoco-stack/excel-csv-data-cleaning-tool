@@ -228,7 +228,7 @@ Local環境でのaxe自動監査はviolations 0でした。これは下記のKey
 - [x] Scan command、scanner version、対象commit、結果を記録する
 - [x] README、`package.json`、QA、Production、Screenshotの機能説明が一致する
 - [x] GitHub RepositoryがPublicで、default branchが`main`、不要な履歴や個人情報がない
-- [x] 3文書へProduction URLとGitHub公開予定URLを記載し、URL placeholderが残っていない
+- [x] 3文書へProduction URLとGitHub公開URLを記載し、URL placeholderが残っていない
 
 Secret Scan evidence:
 
