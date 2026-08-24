@@ -2,7 +2,7 @@
 
 - 対象: **Excel・CSVデータクレンジング・表記統一ツール**
 - Production: [https://excel-csv-data-cleaning-tool.vercel.app](https://excel-csv-data-cleaning-tool.vercel.app)
-- Repository（公開予定）: [https://github.com/shunsoco-stack/excel-csv-data-cleaning-tool](https://github.com/shunsoco-stack/excel-csv-data-cleaning-tool)
+- Repository（Public）: [https://github.com/shunsoco-stack/excel-csv-data-cleaning-tool](https://github.com/shunsoco-stack/excel-csv-data-cleaning-tool)
 - 記録日: 2026-08-24
 
 > このファイルは、自動テスト、ローカルProduction build、Vercel Productionの実ブラウザ検証、公開前Secret Scanを分けて記録するためのチェックリストです。未確認項目を推測でPASSに変更しないでください。
@@ -20,8 +20,8 @@
 | Local axe audit | PASS | violations 0 |
 | Vercel Production deploy | PASS | `https://excel-csv-data-cleaning-tool.vercel.app` |
 | Production workflow smoke | PASS | 顧客DemoでProfile → Detect → Rule → Preview → Dry Run → Clean → Validate → Exportを完走 |
-| Secret Scan | PENDING | 使用Command、対象commit、検出件数 |
-| GitHub public repository | PENDING | Repository URL、default branch、visibility |
+| Secret Scan | PASS | Gitleaks 8.30.1、main全履歴、0 findings |
+| GitHub public repository | PASS | `shunsoco-stack/excel-csv-data-cleaning-tool`、Public、default `main` |
 | Production screenshots 5枚 | PASS | Vercel Production、1440 × 1000、PNG 5枚を目視確認 |
 
 一括Quality Gate:
@@ -221,30 +221,30 @@ Local環境でのaxe自動監査はviolations 0でした。これは下記のKey
 
 ## Secret Scan / GitHub Publication
 
-- [ ] `.env*`（`.env.example`を除く）、`.vercel/`、`.npmrc`、log、coverage、private keyが`.gitignore`対象
-- [ ] `git ls-files`に`.env.local`、`.vercel/project.json`、token、credential、実業務dataがない
-- [ ] tracked filesをAPI key、token、password、private key patternでscanする
-- [ ] Git履歴全体をSecret Scannerでscanする
-- [ ] Scan command、scanner version、対象commit、結果を記録する
-- [ ] README、`package.json`、QA、Production、Screenshotの機能説明が一致する
-- [ ] GitHub RepositoryがPublicで、default branchが`main`、不要な履歴や個人情報がない
+- [x] `.env*`（`.env.example`を除く）、`.vercel/`、`.npmrc`、log、coverage、private keyが`.gitignore`対象
+- [x] `git ls-files`に`.env.local`、`.vercel/project.json`、token、credential、実業務dataがない
+- [x] tracked filesをAPI key、token、password、private key patternでscanする
+- [x] Git履歴全体をSecret Scannerでscanする
+- [x] Scan command、scanner version、対象commit、結果を記録する
+- [x] README、`package.json`、QA、Production、Screenshotの機能説明が一致する
+- [x] GitHub RepositoryがPublicで、default branchが`main`、不要な履歴や個人情報がない
 - [x] 3文書へProduction URLとGitHub公開予定URLを記載し、URL placeholderが残っていない
 
 Secret Scan evidence:
 
 ```text
-Scanner / version: PENDING
-Command: PENDING
-Commit: PENDING
-Findings: PENDING
-Disposition: PENDING
+Scanner / version: Gitleaks 8.30.1
+Command: gitleaks git . --no-banner --redact=100 --no-color --verbose
+Commit: main HEADを含む公開前全Git履歴
+Findings: 0
+Disposition: PASS — no leaks found
 ```
 
 ## Sign-off
 
 | Role | Name | Date | Result |
 | --- | --- | --- | --- |
-| Implementation | PENDING | PENDING | PENDING |
-| Automated QA | PENDING | PENDING | PENDING |
-| Production browser QA | PENDING | PENDING | PENDING |
-| Security / publication check | PENDING | PENDING | PENDING |
+| Implementation | Codex | 2026-08-24 | PASS |
+| Automated QA | `npm run verify` | 2026-08-24 | PASS — 47 tests / lint / typecheck / build |
+| Production browser QA | Vercel Production / agent-browser | 2026-08-24 | PASS — 実施済みChecklist範囲 |
+| Security / publication check | Gitleaks / GitHub CLI | 2026-08-24 | PASS — 0 findings / Public main |

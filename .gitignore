@@ -7,11 +7,12 @@ dist/
 .env
 .env.*
 !.env.example
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
 *.log
 *.tsbuildinfo
 .DS_Store
 docs/local-*.png
-
-
-.vercel
-.env*

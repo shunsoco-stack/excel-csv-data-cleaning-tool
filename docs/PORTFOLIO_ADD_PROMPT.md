@@ -2,7 +2,7 @@
 
 この文書は、完成した「Excel・CSVデータクレンジング・表記統一ツール」を既存ポートフォリオへ追加するときに使用する、事実確認を前提とした実装プロンプトです。
 
-本番URLは公開済みです。GitHub URLは公開予定先として記載しているため、ポートフォリオ掲載時にPublic Repositoryとして到達できることを確認してください。
+本番URLとGitHub Repositoryは公開済みです。ポートフォリオ掲載時は、下記の一次情報とProduction Screenshotを参照してください。
 
 ## 掲載情報
 
@@ -170,9 +170,9 @@ Screenshot alt text:
 ## 公開後の最終チェック
 
 - [x] Production URLを`https://excel-csv-data-cleaning-tool.vercel.app`へ統一
-- [x] GitHub公開予定URLを`https://github.com/shunsoco-stack/excel-csv-data-cleaning-tool`へ統一
+- [x] GitHub公開URLを`https://github.com/shunsoco-stack/excel-csv-data-cleaning-tool`へ統一
 - [x] README、QA、このPromptにURL placeholderが残っていない
-- [ ] Production実画面のScreenshot 5枚を指定pathへ保存
-- [ ] Production / Repository / README / Screenshot linkを開いて確認
-- [ ] QAでPASSの項目と掲載実績が一致
-- [ ] Category / Subcategory / 正式作品名が完全一致
+- [x] Production実画面のScreenshot 5枚を指定pathへ保存
+- [x] Production / Repository / README / Screenshot pathを確認
+- [x] QAでPASSの項目と掲載実績が一致
+- [x] Category / Subcategory / 正式作品名が完全一致
