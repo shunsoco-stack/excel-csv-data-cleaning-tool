@@ -9,6 +9,8 @@ Excel / CSVの業務データをブラウザ内でプロファイリングし、
 
 > 入力ファイルの解析、プロファイリング、変換、検証、Exportデータ生成はブラウザ内で実行します。本アプリに入力ファイルや行データをアップロードするAPIはありません。
 
+![Excel・CSVデータの行数・列数・空欄・重複・列別型を表示するData Profiling画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/01-data-profiling.png)
+
 ## Overview
 
 実務の顧客マスタ、商品マスタ、売上データには、同じ意味を持つ値でも空白、文字幅、大小文字、電話番号、郵便番号、日付などの表記が揃っていないことがあります。手作業で直接修正すると、変更箇所を把握できないまま元データを上書きしたり、不正な値を正しい値だと推測して変換したりする危険があります。
@@ -233,15 +235,27 @@ npm run build
 
 ## Production Screenshots
 
-Vercel Productionの実画面から取得する5枚は、次のpathへ統一します。
+Vercel Productionの実画面から取得した5枚です。画像を選択すると原寸ファイルを確認できます。
 
-| Workflow state | Screenshot |
-| --- | --- |
-| Data Profiling | [`docs/screenshots/01-data-profiling.png`](docs/screenshots/01-data-profiling.png) |
-| Rule設定 | [`docs/screenshots/02-rule-settings.png`](docs/screenshots/02-rule-settings.png) |
-| Before / After | [`docs/screenshots/03-before-after-preview.png`](docs/screenshots/03-before-after-preview.png) |
-| Dry Run | [`docs/screenshots/04-dry-run-result.png`](docs/screenshots/04-dry-run-result.png) |
-| Dashboard / Export | [`docs/screenshots/05-dashboard-export.png`](docs/screenshots/05-dashboard-export.png) |
+### 1. Data Profiling
+
+[![Excel・CSVデータの行数・列数・空欄・重複・列別型を表示するData Profiling画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/01-data-profiling.png)](docs/screenshots/01-data-profiling.png)
+
+### 2. Rule設定
+
+[![電話番号・登録日・メールなどへ列別クレンジングRuleを設定する画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/02-rule-settings.png)](docs/screenshots/02-rule-settings.png)
+
+### 3. Before / After Preview
+
+[![変更Cellを強調して元データと変換後を比較するBefore After Preview](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/03-before-after-preview.png)](docs/screenshots/03-before-after-preview.png)
+
+### 4. Dry Run
+
+[![変更予定Cell数・削除予定重複数・警告件数を示すDry Run結果](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/04-dry-run-result.png)](docs/screenshots/04-dry-run-result.png)
+
+### 5. Dashboard / Export
+
+[![修正Cell・欠損・警告の完了DashboardとCSV・XLSX・Report Export画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/05-dashboard-export.png)](docs/screenshots/05-dashboard-export.png)
 
 ## Development
 
