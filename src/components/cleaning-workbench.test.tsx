@@ -1,10 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { CleaningWorkbench } from "./cleaning-workbench";
 
 describe("CleaningWorkbench", () => {
   beforeEach(() => {
+    cleanup();
     window.localStorage.clear();
     window.scrollTo = vi.fn();
   });
@@ -26,5 +27,16 @@ describe("CleaningWorkbench", () => {
     expect(screen.getByText("Dry Run完了")).toBeInTheDocument();
     expect(screen.getByText("変更予定セル")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /一括クレンジングを実行/ })).toBeEnabled();
+  });
+
+  it("shows the first ad slot only on the file import step", async () => {
+    const user = userEvent.setup();
+    render(<CleaningWorkbench />);
+
+    expect(screen.queryByLabelText("広告枠 1")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /ファイル読込CSV \/ XLSX/ }));
+
+    expect(screen.getByLabelText("広告枠 1")).toHaveAttribute("data-ad-provider", "house");
+    expect(screen.queryByLabelText("広告枠 2")).not.toBeInTheDocument();
   });
 });

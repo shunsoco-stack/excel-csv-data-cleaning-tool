@@ -174,6 +174,21 @@ Dry Runでは次を表示します。
 
 本項はこのアプリ自身の実装範囲を説明するものです。利用する端末、ブラウザ、拡張機能、Hosting環境の運用ポリシーは別途確認してください。
 
+## 広告について
+
+本アプリではサービス維持・運営のため広告を表示する場合があります。
+
+広告はアプリの主要操作を妨げない位置に配置し、ツール・ゲーム・大会進行・求人応募などの主要機能を優先した設計としています。
+
+- 広告①は「ファイル読込」画面の説明とファイル選択の間に配置
+- 広告②は「Export」画面の出力データ確認より下に、ダウンロード操作から間隔を空けて配置
+- i-mobileの正式タグが未設定の場合はダミー広告を表示せず、自社サービス案内へ切り替え
+- 広告枠の最小高を事前確保し、iframe内へ隔離してアプリ本体へのエラー波及とCLSを抑制
+- i-mobile、Google AdSense、自社広告、アフィリエイトの優先順位は`src/config/ads.ts`で一元管理
+- i-mobile管理画面から取得した正式タグは`src/config/ads.ts`の`IMOBILE_TAGS`へ未改変で設定
+
+広告配信とCookie等の取扱いについては[プライバシーポリシー](https://excel-csv-data-cleaning-tool.vercel.app/privacy/)をご確認ください。
+
 ## Architecture
 
 ```text
@@ -204,7 +219,7 @@ Next.js App Router / React Client UI
 
 最低要件のTrim、Case、全半角、Date、Phone、Postal Code、Duplicate、Empty、XLSX、CSV、Exportを含む自動テストを用意しています。
 
-2026-08-24時点で、ESLint、TypeScript、47 tests、Production buildがすべてPASSしました。Local browserではCSV、複数Sheet XLSX、3 Demo、Dry Run、Undo相当の再実行、Template、CSV / XLSX / Cleaning Report Exportを確認し、axeの自動監査はviolations 0でした。Vercel Productionでは顧客Demoの主要Workflow完走、商品・売上Demo、実CSV、複数Sheet XLSX、Local-firstのNetwork log、5枚のScreenshotを確認しています。詳細は[docs/QA.md](docs/QA.md)で記録します。
+2026-09-23時点で、ESLint、TypeScript、49 tests、Production buildがすべてPASSしました。Local browserでは広告①・②、顧客DemoのDry Run、Clean、Export、Desktop / Mobileの横overflow、Console errorを確認しています。Vercel Productionの確認内容と5枚のScreenshotは[docs/QA.md](docs/QA.md)で記録します。
 
 | Test area | 主な検証内容 |
 | --- | --- |
@@ -237,25 +252,25 @@ npm run build
 
 Vercel Productionの実画面から取得した5枚です。画像を選択すると原寸ファイルを確認できます。
 
-### 1. Data Profiling
+### 1. トップ画面
 
-[![Excel・CSVデータの行数・列数・空欄・重複・列別型を表示するData Profiling画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/01-data-profiling.png)](docs/screenshots/01-data-profiling.png)
+[![Excel・CSVデータクレンジングツールのトップ画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/01-top.png)](docs/screenshots/01-top.png)
 
-### 2. Rule設定
+### 2. 広告①を含む画面
 
-[![電話番号・登録日・メールなどへ列別クレンジングRuleを設定する画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/02-rule-settings.png)](docs/screenshots/02-rule-settings.png)
+[![説明とファイル選択の間に広告①を配置した画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/02-ad-top.png)](docs/screenshots/02-ad-top.png)
 
-### 3. Before / After Preview
+### 3. 主要機能画面
 
-[![変更Cellを強調して元データと変換後を比較するBefore After Preview](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/03-before-after-preview.png)](docs/screenshots/03-before-after-preview.png)
+[![変更Cellを強調して元データと変換後を比較する主要機能画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/03-main-workflow.png)](docs/screenshots/03-main-workflow.png)
 
-### 4. Dry Run
+### 4. 広告②を含む画面
 
-[![変更予定Cell数・削除予定重複数・警告件数を示すDry Run結果](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/04-dry-run-result.png)](docs/screenshots/04-dry-run-result.png)
+[![Export結果と十分な間隔を空けた広告②を含む画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/04-ad-result.png)](docs/screenshots/04-ad-result.png)
 
-### 5. Dashboard / Export
+### 5. スマートフォン表示
 
-[![修正Cell・欠損・警告の完了DashboardとCSV・XLSX・Report Export画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/05-dashboard-export.png)](docs/screenshots/05-dashboard-export.png)
+[![スマートフォンで広告①とファイル選択を表示した画面](https://raw.githubusercontent.com/shunsoco-stack/excel-csv-data-cleaning-tool/main/docs/screenshots/05-mobile.png)](docs/screenshots/05-mobile.png)
 
 ## Development
 

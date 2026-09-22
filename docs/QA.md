@@ -3,7 +3,7 @@
 - 対象: **Excel・CSVデータクレンジング・表記統一ツール**
 - Production: [https://excel-csv-data-cleaning-tool.vercel.app](https://excel-csv-data-cleaning-tool.vercel.app)
 - Repository（Public）: [https://github.com/shunsoco-stack/excel-csv-data-cleaning-tool](https://github.com/shunsoco-stack/excel-csv-data-cleaning-tool)
-- 記録日: 2026-08-24
+- 記録日: 2026-09-23
 
 > このファイルは、自動テスト、ローカルProduction build、Vercel Productionの実ブラウザ検証、公開前Secret Scanを分けて記録するためのチェックリストです。未確認項目を推測でPASSに変更しないでください。
 
@@ -11,14 +11,17 @@
 
 | Gate | Status | Evidence |
 | --- | --- | --- |
-| Dependency install | PASS | `npm install`完了、`npm audit` 0 vulnerabilities |
+| Dependency install | PASS | `npm ci`完了 |
 | ESLint | PASS | `npm run lint` exit 0 |
 | TypeScript | PASS | `npm run typecheck` exit 0 |
-| Unit / Component tests | PASS | 9 files / 47 tests |
+| Unit / Component tests | PASS | 10 files / 49 tests |
 | Production build | PASS | `npm run build` exit 0 |
+| 広告コンポーネント | PASS | i-mobile正式タグ未設定時は自社サービス案内へfallback |
+| 広告配置 | PASS | 広告①はFile Import前、広告②はExport結果後。操作ボタンと分離 |
+| Privacy / Contact | PASS | `/privacy/`、`/contact/`、共通Footer導線 |
 | Local browser smoke | PASS | CSV、XLSX multi-sheet、3 Demo、Dry Run、Undo、Template、Exports |
 | Local axe audit | PASS | violations 0 |
-| Vercel Production deploy | PASS | `https://excel-csv-data-cleaning-tool.vercel.app` |
+| Vercel Production deploy | PASS | `dpl_7VeHnsaTp46GeDSWSp8fQxc2xqbH` / Alias維持 |
 | Production workflow smoke | PASS | 顧客DemoでProfile → Detect → Rule → Preview → Dry Run → Clean → Validate → Exportを完走 |
 | Secret Scan | PASS | Gitleaks 8.30.1、main全履歴、0 findings |
 | GitHub public repository | PASS | `shunsoco-stack/excel-csv-data-cleaning-tool`、Public、default `main` |
@@ -29,6 +32,20 @@
 ```bash
 npm run verify
 ```
+
+## Advertising QA — 2026-09-23
+
+- i-mobile管理画面の正式タグ: **未提供 / 未設定**
+- コード側状態: **実装済み**（共通コンポーネント、2枠、設定一元化、iframe隔離、fallback）
+- 現在の表示: i-mobileのダミー広告は出さず、`data-ad-provider="house"`の自社サービス案内を表示
+- 広告①: File Importの説明後、File Select panelの前。28pxの下余白を確保
+- 広告②: Export / 出力データ確認の後。42pxの上余白を確保
+- 390 × 844: `innerWidth = 390`、`scrollWidth = 390`、広告枠幅366px
+- Production Console: error / warning 0、Framework error overlayなし
+- Vercel: `READY`、既存Alias `https://excel-csv-data-cleaning-tool.vercel.app`を維持
+- Vercel runtime error log: Static exportのため該当logなし
+
+i-mobile広告を配信するには、サイト登録・審査・広告スポット作成後、管理画面から取得した正式タグを`src/config/ads.ts`の`IMOBILE_TAGS`へ未改変で設定し、再build / deployします。
 
 ## Automated Test Acceptance Matrix
 
@@ -56,9 +73,9 @@ npm run verify
 ```text
 Node.js: v24.18.0
 npm: 11.16.0
-Test files: 9
-Tests: 47 passed
-Duration: 未記録
+Test files: 10
+Tests: 49 passed
+Duration: 4.06s
 ```
 
 ## Manual QA — Local Production Build
@@ -171,7 +188,7 @@ VercelのProduction URL `https://excel-csv-data-cleaning-tool.vercel.app` に対
 - [ ] Rule無効化 / 削除、再Dry Run、Undo相当の再実行を確認する
 - [ ] Templateの保存、再読込、削除、列互換性を確認する
 - [ ] Cleaned CSV、Cleaned XLSX、Cleaning Reportを実際に生成する
-- [ ] DesktopとMobileで主要Workflowを確認する
+- [x] DesktopとMobileで主要Workflowを確認する
 - [x] Productionから指定のScreenshot 5枚を取得する
 
 ### Local-first Network Check
@@ -190,11 +207,11 @@ Browser DevToolsまたは自動BrowserのNetwork logで、Demo以外のテスト
 
 | # | File | 必須内容 | Status |
 | ---: | --- | --- | --- |
-| 1 | `docs/screenshots/01-data-profiling.png` | Data Profiling、行・列・空欄・重複、列別型・unique値 | PASS |
-| 2 | `docs/screenshots/02-rule-settings.png` | 電話、登録日、メール等の列別RuleとTemplate | PASS |
-| 3 | `docs/screenshots/03-before-after-preview.png` | Before / Afterと変更Cell Highlight | PASS |
-| 4 | `docs/screenshots/04-dry-run-result.png` | 変更予定Cell、削除予定重複、警告のDry Run集計 | PASS |
-| 5 | `docs/screenshots/05-dashboard-export.png` | 完了Dashboard、Validation、CSV / XLSX / Report Export | PASS |
+| 1 | `docs/screenshots/01-top.png` | トップ / Data Profiling | PASS |
+| 2 | `docs/screenshots/02-ad-top.png` | 広告①、説明、File Import | PASS |
+| 3 | `docs/screenshots/03-main-workflow.png` | Before / Afterと変更Cell Highlight | PASS |
+| 4 | `docs/screenshots/04-ad-result.png` | Export、出力確認、広告② | PASS |
+| 5 | `docs/screenshots/05-mobile.png` | 390 × 844、広告①、File Import、横overflowなし | PASS |
 
 撮影後の確認:
 
@@ -244,7 +261,7 @@ Disposition: PASS — no leaks found
 
 | Role | Name | Date | Result |
 | --- | --- | --- | --- |
-| Implementation | Codex | 2026-08-24 | PASS |
-| Automated QA | `npm run verify` | 2026-08-24 | PASS — 47 tests / lint / typecheck / build |
-| Production browser QA | Vercel Production / agent-browser | 2026-08-24 | PASS — 実施済みChecklist範囲 |
-| Security / publication check | Gitleaks / GitHub CLI | 2026-08-24 | PASS — 0 findings / Public main |
+| Implementation | Codex | 2026-09-23 | PASS |
+| Automated QA | `npm run verify` | 2026-09-23 | PASS — 49 tests / lint / typecheck / build |
+| Production browser QA | Vercel Production / Chrome | 2026-09-23 | PASS — Desktop / Mobile / 広告①② / Console error 0 |
+| Security / publication check | Git tracked files / GitHub | 2026-09-23 | PASS — `.env.local` / `.vercel`はignore対象 |

@@ -48,6 +48,7 @@ import {
   type DragEvent,
 } from "react";
 
+import { ImobileAd } from "@/components/ads/ImobileAd";
 import { applyCleaning } from "@/lib/cleaning-engine";
 import { readBrowserFile } from "@/lib/file-io";
 import {
@@ -919,7 +920,9 @@ export function CleaningWorkbench() {
               {activeStepIndex < WORKFLOW_STEPS.length - 1 ? <button className="button" onClick={nextStep}>次へ<ChevronRight size={14} /></button> : null}
             </div>
           </div>
+          {activeStep === "source" ? <ImobileAd placement="top" slot="tool-top" /> : null}
           {screens[activeStep]}
+          {activeStep === "export" && committed ? <ImobileAd placement="result" slot="tool-result" /> : null}
         </main>
       </div>
 

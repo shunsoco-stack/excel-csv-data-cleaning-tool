@@ -250,6 +250,40 @@ select:focus-visible,
 .panel-body { padding: 18px; }
 .panel-body.flush { padding: 0; }
 
+.ad-slot {
+  position: relative;
+  display: grid;
+  width: 100%;
+  max-width: 100%;
+  align-items: center;
+  padding: 22px 18px 16px;
+  overflow: hidden;
+  border: 1px solid #dce2ec;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .78);
+  box-shadow: 0 1px 2px rgba(16,24,40,.03);
+}
+.ad-slot-top { margin: 0 0 28px; }
+.ad-slot-result { margin: 42px 0 4px; }
+.ad-disclosure {
+  position: absolute;
+  top: 6px;
+  left: 12px;
+  color: #7b8494;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+.imobile-frame { width: 100%; min-height: 78px; border: 0; background: transparent; }
+.house-ad { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; width: 100%; }
+.house-ad-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 12px; background: var(--blue-soft); color: var(--blue); }
+.house-ad-copy { min-width: 0; }
+.house-ad-copy small { display: block; color: var(--blue-strong); font-size: 9px; font-weight: 760; letter-spacing: .06em; text-transform: uppercase; }
+.house-ad-copy strong { display: block; margin-top: 2px; color: var(--ink-strong); font-size: 13px; }
+.house-ad-copy > span { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; }
+.house-ad-link { display: inline-flex; min-height: 36px; align-items: center; justify-content: center; gap: 6px; padding: 7px 11px; border: 1px solid #cbd8ef; border-radius: 9px; background: white; color: var(--blue-strong); font-size: 10px; font-weight: 720; white-space: nowrap; }
+.house-ad-link:hover { border-color: #9eb8e9; background: var(--blue-soft); }
+
 .metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .metric-card { position: relative; overflow: hidden; min-height: 112px; padding: 17px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
 .metric-card::after { position: absolute; right: -23px; bottom: -30px; width: 82px; height: 82px; border-radius: 50%; background: var(--accent-soft, var(--blue-soft)); content: ""; }
@@ -452,6 +486,17 @@ select:focus-visible,
 .nowrap { white-space: nowrap; }
 .spacer { flex: 1; }
 
+.site-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; width: min(1560px, 100%); margin: 0 auto; padding: 18px clamp(18px, 3.2vw, 44px) 28px; border-top: 1px solid rgba(213,219,230,.72); color: var(--muted); font-size: 10px; }
+.site-footer p { margin: 0; }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 16px; }
+.site-footer a:hover { color: var(--blue-strong); text-decoration: underline; }
+.legal-page { width: min(760px, calc(100% - 32px)); min-height: calc(100vh - 95px); margin: 0 auto; padding: 56px 0 80px; }
+.legal-page h1 { margin: 18px 0 28px; color: var(--ink-strong); font-size: clamp(28px, 5vw, 42px); letter-spacing: -.04em; }
+.legal-page h2 { margin: 34px 0 10px; color: var(--ink-strong); font-size: 18px; }
+.legal-page p { margin: 0 0 14px; color: var(--muted-strong); line-height: 1.9; }
+.legal-back { color: var(--blue-strong); font-size: 12px; font-weight: 700; }
+.legal-contact-link { margin-top: 18px; }
+
 @media (max-width: 1120px) {
   .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .issue-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -495,6 +540,14 @@ select:focus-visible,
   .rule-action { grid-column: 2 / -1; }
   .rule-controls { grid-column: 3; grid-row: 1; }
   .summary-numbers { grid-template-columns: 1fr; }
+  .ad-slot { min-height: 104px !important; padding: 24px 13px 14px; }
+  .ad-slot-top { margin-bottom: 24px; }
+  .ad-slot-result { margin-top: 36px; }
+  .house-ad { grid-template-columns: auto minmax(0, 1fr); gap: 10px; }
+  .house-ad-link { grid-column: 1 / -1; justify-self: stretch; }
+  .house-ad-copy > span { font-size: 9px; }
+  .site-footer { display: grid; justify-content: center; text-align: center; }
+  .site-footer nav { justify-content: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
