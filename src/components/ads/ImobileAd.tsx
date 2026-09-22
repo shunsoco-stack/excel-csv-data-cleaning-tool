@@ -3,7 +3,14 @@
 import { ExternalLink, LayoutGrid } from "lucide-react";
 import { useState } from "react";
 
-import { AD_CONFIG, IMOBILE_TAGS, type AdSlotId } from "@/config/ads";
+import {
+  AD_CONFIG,
+  ADSENSE_TAGS,
+  AFFILIATE_TAGS,
+  IMOBILE_TAGS,
+  type AdProvider,
+  type AdSlotId,
+} from "@/config/ads";
 
 interface ImobileAdProps {
   placement: "top" | "result";
@@ -15,31 +22,38 @@ function buildAdDocument(tag: string) {
 }
 
 export function ImobileAd({ placement, slot }: ImobileAdProps) {
-  const [imobileFailed, setImobileFailed] = useState(false);
+  const [failedProviders, setFailedProviders] = useState<readonly AdProvider[]>([]);
   const slotConfig = AD_CONFIG.slots[slot];
-  const officialTag = IMOBILE_TAGS[slot].trim();
-  const useImobile = AD_CONFIG.providerPriority.includes("imobile") && officialTag.length > 0 && !imobileFailed;
-  const useHouse = AD_CONFIG.providerPriority.includes("house");
+  const providerTags: Partial<Record<AdProvider, string>> = {
+    imobile: IMOBILE_TAGS[slot].trim(),
+    adsense: ADSENSE_TAGS[slot].trim(),
+    affiliate: AFFILIATE_TAGS[slot].trim(),
+  };
+  const provider = AD_CONFIG.providerPriority.find((candidate) =>
+    candidate === "house" || (Boolean(providerTags[candidate]) && !failedProviders.includes(candidate)),
+  );
+  const adTag = provider ? providerTags[provider] : undefined;
+  const useExternalAd = provider !== undefined && provider !== "house" && Boolean(adTag);
 
-  if (!AD_CONFIG.enabled || (!useImobile && !useHouse)) return null;
+  if (!AD_CONFIG.enabled || !provider) return null;
 
   return (
     <aside
       className={`ad-slot ad-slot-${placement}`}
       aria-label={slotConfig.label}
-      data-ad-provider={useImobile ? "imobile" : "house"}
+      data-ad-provider={provider}
       style={{ minHeight: slotConfig.minHeight }}
     >
-      <span className="ad-disclosure">{useImobile ? "広告" : "自社サービス案内"}</span>
-      {useImobile ? (
+      <span className="ad-disclosure">{useExternalAd ? "広告" : "自社サービス案内"}</span>
+      {useExternalAd ? (
         <iframe
           className="imobile-frame"
           title={slotConfig.label}
-          srcDoc={buildAdDocument(officialTag)}
+          srcDoc={buildAdDocument(adTag ?? "")}
           sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
           loading="lazy"
           referrerPolicy="strict-origin-when-cross-origin"
-          onError={() => setImobileFailed(true)}
+          onError={() => setFailedProviders((current) => current.includes(provider) ? current : [...current, provider])}
         />
       ) : (
         <div className="house-ad">

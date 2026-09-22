@@ -16,9 +16,20 @@ export const IMOBILE_TAGS: Record<AdSlotId, string> = {
   "tool-result": String.raw``,
 };
 
+/** Optional future providers use the same slot contract and remain disabled while empty. */
+export const ADSENSE_TAGS: Record<AdSlotId, string> = {
+  "tool-top": String.raw``,
+  "tool-result": String.raw``,
+};
+
+export const AFFILIATE_TAGS: Record<AdSlotId, string> = {
+  "tool-top": String.raw``,
+  "tool-result": String.raw``,
+};
+
 export const AD_CONFIG = {
   enabled: true,
-  providerPriority: ["imobile", "house"] satisfies readonly AdProvider[],
+  providerPriority: ["imobile", "adsense", "affiliate", "house"] satisfies readonly AdProvider[],
   slots: {
     "tool-top": {
       label: "広告枠 1",
