@@ -21,7 +21,7 @@
 | Privacy / Contact | PASS | `/privacy/`、`/contact/`、共通Footer導線 |
 | Local browser smoke | PASS | CSV、XLSX multi-sheet、3 Demo、Dry Run、Undo、Template、Exports |
 | Local axe audit | PASS | violations 0 |
-| Vercel Production deploy | PASS | `dpl_7VeHnsaTp46GeDSWSp8fQxc2xqbH` / Alias維持 |
+| Vercel Production deploy | PASS | Production `READY` / Alias維持 |
 | Production workflow smoke | PASS | 顧客DemoでProfile → Detect → Rule → Preview → Dry Run → Clean → Validate → Exportを完走 |
 | Secret Scan | PASS | Gitleaks 8.30.1、main全履歴、0 findings |
 | GitHub public repository | PASS | `shunsoco-stack/excel-csv-data-cleaning-tool`、Public、default `main` |
