@@ -29,14 +29,14 @@ describe("CleaningWorkbench", () => {
     expect(screen.getByRole("button", { name: /一括クレンジングを実行/ })).toBeEnabled();
   });
 
-  it("shows the first ad slot only on the file import step", async () => {
+  it("does not place ad slots inside the file import or result workflow", async () => {
     const user = userEvent.setup();
     render(<CleaningWorkbench />);
 
     expect(screen.queryByLabelText("広告枠 1")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("広告枠 2")).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /ファイル読込CSV \/ XLSX/ }));
-
-    expect(screen.getByLabelText("広告枠 1")).toHaveAttribute("data-ad-provider", "house");
+    expect(screen.queryByLabelText("広告枠 1")).not.toBeInTheDocument();
     expect(screen.queryByLabelText("広告枠 2")).not.toBeInTheDocument();
   });
 });
